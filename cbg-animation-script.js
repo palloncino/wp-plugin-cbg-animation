@@ -163,6 +163,7 @@ function exitSceneAndRedirect(_sphere) {
   const CbgTextHeading = document.getElementById("cbg_text_heading");
   CbgTextHeading.style.visibility = "visible";
   CbgTextHeading.style.opacity = 1;
+  document.body.style.overflowY = "hidden";
 }
 
 function mousePressed() {
