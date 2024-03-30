@@ -195,6 +195,7 @@ function mousePressed() {
           sphere.y
         );
         if (distance < sphere.size / 2) {
+          currentPhase = (currentPhase + 1) % phases.length;
           exitSceneAndRedirect(sphere);
           return;
         }
@@ -337,18 +338,22 @@ function draw() {
     spheres[7].y = lerp(spheres[7].y, currentTargets[5].y, 0.05);
   }
 
-  for (let sphere of visibleSpheres) {
-    if (sphere.isExiting) {
-      sphere.y = lerp(sphere.y, -1000, 0.05);
-    } else if (sphere.isOrbiting) {
-      const el = domContainerMapping(sphere.id);
-
-      if (el) {
-        el.style.visibility = "visible";
-        el.style.opacity = 1;
+  if (phases[currentPhase] === "REDIRECT") {
+    for (let sphere of visibleSpheres) {
+      if (sphere.isExiting) {
+        sphere.y = lerp(sphere.y, -1000, 0.05);
+      } else if (sphere.isOrbiting) {
+        const el = domContainerMapping(sphere.id);
+        if (el) {
+          el.style.visibility = "visible";
+          el.style.opacity = 1;
+        }
       }
     }
+    return;
+  }
 
+  for (let sphere of visibleSpheres) {
     let d = dist(mouseX - width / 2, mouseY - height / 2, sphere.x, sphere.y);
     let isHovering = d < sphere.size / 2;
     sphere.currentSize = lerp(sphere.currentSize, sphere.targetSize, 0.1);
