@@ -56,7 +56,7 @@ function setup() {
   p5Canvas.id("p5Canvas");
   spheres = [
     {
-      x: -300,
+      x: VIEWPORT === 'mobile' ? -50 : -300,
       y: 100,
       size: 80,
       currentSize: 80,
@@ -65,7 +65,7 @@ function setup() {
       text: "",
     },
     {
-      x: 300,
+      x: VIEWPORT === 'mobile' ? 50 : 300,
       y: -100,
       size: 80,
       currentSize: 80,
@@ -217,8 +217,8 @@ function draw() {
   if (phases[currentPhase] === "FLOATING") {
     visibleSpheres = spheres.slice(0, 2);
     const orbitCenter = [
-      { x: -200, y: -50 },
-      { x: 200, y: 50 },
+      { x: VIEWPORT === 'mobile' ? -50 : -200, y: -50 },
+      { x: VIEWPORT === 'mobile' ? 50 : 200, y: 50 }
     ];
     applyOrbitalBehavior(visibleSpheres[1], orbitCenter[0], 0.01, 20, 20, true);
     applyOrbitalBehavior(
